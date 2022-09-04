@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import '@chatui/core/dist/index.css';
+import { Layout, Menu, MenuProps } from 'antd';
+import ChatArea from './ChatArea';
+import Options from './Options';
 
-function App() {
+const App = () => {
+  const [current, setCurrent] = useState('chat');
+
+  //items for custom menu
+  const items: MenuProps["items"] = [
+    {
+      label: "Chat",
+      key: "chat"
+    },
+    {
+      label: "Settings",
+      key: "settings"
+    }
+  ];
+
+  const onClick: MenuProps['onClick'] = e => {
+    console.log('click ', e);
+    setCurrent(e.key);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+    // A horizontal antd menu with two items: "Chat" and "Configure"
+    // The chat window should be the default view
+    <div className='App' >
+    <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
+    {current === 'chat' ? <ChatArea/>: <Options/>}
     </div>
+
   );
-}
+};
 
 export default App;
