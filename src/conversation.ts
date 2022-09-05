@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import defaultSettings from './characters';
 
 
@@ -10,12 +11,14 @@ class Conversation {
         this.conversation = "";
         this.num_user_inputs = 0;
         this.settings = settings;
+
     }
 
     get_prompt(user_input: string): string {
         if (this.conversation === "") {
             this.conversation =
-                this.settings["STARTING_PROMPT"] + "\n" +
+                //this.settings["STARTING_PROMPT"] + "\n" +
+                (Cookies.get("startingPrompt") || this.settings["STARTING_PROMPT"]) + "\n" +
                 this.settings["USER_PREFIX"] + user_input +
                 "\n" +
                 this.settings["AI_PREFIX"];

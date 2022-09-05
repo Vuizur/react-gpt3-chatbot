@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import './App.css';
 import { Button, Form, Input, Layout, Menu, MenuProps } from 'antd';
 import Cookies from 'js-cookie';
+import defaultSettings from './characters';
 
 
 const defaultOptions = {
@@ -16,9 +17,9 @@ const defaultOptions = {
 const getStartingPrompt = () => {
     const prompt = Cookies.get('startingPrompt')
     console.log(prompt)
-    if (prompt == null){
+    if (prompt == null) {
         return defaultOptions.startingPrompt
-    } else{
+    } else {
         return prompt
     }
 }
@@ -32,12 +33,19 @@ const Options = () => {
     //Api key hook
     const [apiKey, setApiKey] = useState(Cookies.get("apiKey") || "")
 
+    const [userPrefix, setUserPrefix] = useState(Cookies.get("userPrefix") || defaultSettings.USER_PREFIX)
+    const [AIPrefix, setAIPrefix] = useState(Cookies.get("AIPrefix") || defaultSettings.AI_PREFIX)
 
+    console.log("User prefix", Cookies.get("userPrefix"))
     const onFinish = (values: any) => {
         setStartingPrompt(values.startingPrompt)
         Cookies.set("startingPrompt", values.startingPrompt)
         setApiKey(values.apiKey)
         Cookies.set("apiKey", values.apiKey)
+        setUserPrefix(values.userPrefix)
+        Cookies.set("userPrefix", values.userPrefix)
+        setAIPrefix(values.AIPrefix)
+        Cookies.set("AIPrefix", values.AIPrefix)
         console.log('Success:', values);
     };
 
@@ -50,7 +58,7 @@ const Options = () => {
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            initialValues={{startingPrompt: startingPrompt}}
+            initialValues={{ startingPrompt: startingPrompt, apiKey: apiKey, userPrefix: userPrefix, AIPrefix: AIPrefix }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
@@ -59,6 +67,22 @@ const Options = () => {
                 label="Starting prompt"
                 name="startingPrompt"
                 rules={[{ message: 'Please input the starting prompt!' }]}
+            >
+                <Input />
+            </Form.Item>
+
+            <Form.Item
+                label="User prefix"
+                name="userPrefix"
+                rules={[{ message: 'Please input the user prefix!' }]}
+            >
+                <Input />
+            </Form.Item>
+
+            <Form.Item
+                label="AI prefix"
+                name="AIPrefix"
+                rules={[{ message: 'Please input the AI prefix!' }]}
             >
                 <Input />
             </Form.Item>
