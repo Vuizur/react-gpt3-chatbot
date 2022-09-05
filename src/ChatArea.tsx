@@ -23,7 +23,7 @@ const ChatArea = () => {
 
             setTyping(true);
 
-            const prompt = conversation.get_prompt(val)
+            const prompt = conversation.get_prompt(val).trim()
             console.log("Prompt: ", prompt)
             console.log("Conversation: ", conversation.conversation)
 
@@ -66,7 +66,7 @@ const ChatArea = () => {
     return (
         <>
             <Chat
-                navbar={{ title: 'Assistant' }}
+                navbar={{ title: 'Chatbot' }}
                 messages={messages}
                 renderMessageContent={renderMessageContent}
                 onSend={handleSend}

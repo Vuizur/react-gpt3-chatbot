@@ -39,13 +39,13 @@ const Options = () => {
     console.log("User prefix", Cookies.get("userPrefix"))
     const onFinish = (values: any) => {
         setStartingPrompt(values.startingPrompt)
-        Cookies.set("startingPrompt", values.startingPrompt)
+        Cookies.set("startingPrompt", values.startingPrompt, {expires: 365})
         setApiKey(values.apiKey)
-        Cookies.set("apiKey", values.apiKey)
+        Cookies.set("apiKey", values.apiKey, {expires: 365})
         setUserPrefix(values.userPrefix)
-        Cookies.set("userPrefix", values.userPrefix)
+        Cookies.set("userPrefix", values.userPrefix, {expires: 365})
         setAIPrefix(values.AIPrefix)
-        Cookies.set("AIPrefix", values.AIPrefix)
+        Cookies.set("AIPrefix", values.AIPrefix, {expires: 365})
         console.log('Success:', values);
     };
 
