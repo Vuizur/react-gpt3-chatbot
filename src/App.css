@@ -43,9 +43,11 @@ Chat {
 }
 */
 .App {
-  height:90%;
+  height:80%;
+  /*flex: 1 1 auto;*/
 }
 
+/* Doesn't work */
 Chat {
   max-width: 800px;
 }
@@ -53,4 +55,10 @@ Chat {
 Form {
   max-width: 800px;
   max-width: 80%;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
 }

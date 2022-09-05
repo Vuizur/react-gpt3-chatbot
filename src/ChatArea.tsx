@@ -6,8 +6,6 @@ import { Configuration, OpenAIApi } from "openai";
 import Cookies from "js-cookie";
 
 
-
-
 const ChatArea = () => {
     const { messages, appendMsg, setTyping } = useMessages([]);
     const [openai, setOpenai] = useState(new OpenAIApi(new Configuration({ apiKey: Cookies.get("apiKey") })));
@@ -41,7 +39,7 @@ const ChatArea = () => {
                 openai.createCompletion({
                     model: 'text-davinci-002',
                     prompt: prompt,
-                    stop: defaultSettings['USER_PREFIX'].trim(),
+                    stop: (Cookies.get("userPrefix") || defaultSettings['USER_PREFIX']).trim(),
                     max_tokens: defaultSettings['MAX_TOKENS'],
                     frequency_penalty: defaultSettings['FREQUENCY_PENALTY'],
                     presence_penalty: defaultSettings['PRESENCE_PENALTY'],
@@ -55,15 +53,7 @@ const ChatArea = () => {
                 });
 
             }
-            //conversation.set_completion("Bala bala")
 
-
-            //setTimeout(() => {
-            //    appendMsg({
-            //        type: 'text',
-            //        content: { text: 'Bala bala' + val },
-            //    });
-            //}, 1000);
         }
     }
 

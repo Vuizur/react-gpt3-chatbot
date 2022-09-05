@@ -15,32 +15,43 @@ class Conversation {
     }
 
     get_prompt(user_input: string): string {
+
+        const user_prefix = (Cookies.get("userPrefix") || this.settings["USER_PREFIX"]);
+        const starting_prompt = (Cookies.get("startingPrompt") || this.settings["STARTING_PROMPT"]);
+        const ai_prefix = (Cookies.get("AIPrefix") || this.settings["AI_PREFIX"]);
+
         if (this.conversation === "") {
             this.conversation =
                 //this.settings["STARTING_PROMPT"] + "\n" +
-                (Cookies.get("startingPrompt") || this.settings["STARTING_PROMPT"]) + "\n" +
-                this.settings["USER_PREFIX"] + user_input +
+                starting_prompt + "\n" +
+                user_prefix + user_input +
                 "\n" +
-                this.settings["AI_PREFIX"];
+                ai_prefix;
         } else {
             this.conversation =
                 this.conversation.trim() +
                 "\n" +
-                this.settings["USER_PREFIX"] +
+                user_prefix +
                 user_input +
                 "\n" +
-                this.settings["AI_PREFIX"];
+                ai_prefix;
         }
         this.num_user_inputs += 1;
 
         if (this.num_user_inputs > this.settings["MAX_NUM_USER_INPUTS"]) {
+            let split_conversation = this.conversation.split("\n" + user_prefix);
+            // Remove the two first elements and then put the rest back together
+            split_conversation.splice(0, 2);
+            const remaining_conversation = split_conversation.join("\n" + user_prefix);
+
             this.conversation =
-                this.settings["STARTING_PROMPT"] +
+                starting_prompt+
                 "\n" +
                 this.settings["CUT_DIALOGUE_PLACEHOLDER"] +
                 "\n" +
-                this.settings["USER_PREFIX"] +
-                this.conversation.split("\n" + this.settings["USER_PREFIX"], 2)[2];
+                user_prefix +
+                remaining_conversation
+                //this.conversation.split("\n" + user_prefix, 2)[2];
         }
 
         return this.conversation;
