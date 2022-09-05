@@ -1,6 +1,7 @@
 {
   "name": "react-gpt3-chatbot",
   "version": "0.1.0",
+  "homepage": "https://Vuizur.github.io/react-gpt3-chatbot",
   "private": true,
   "dependencies": {
     "@chatui/core": "^2.4.2",
@@ -21,6 +22,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -45,6 +48,7 @@
     ]
   },
   "devDependencies": {
-    "@types/js-cookie": "^3.0.2"
+    "@types/js-cookie": "^3.0.2",
+    "gh-pages": "^4.0.0"
   }
 }

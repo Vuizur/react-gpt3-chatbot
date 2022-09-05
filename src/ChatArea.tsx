@@ -10,7 +10,7 @@ import Cookies from "js-cookie";
 
 const ChatArea = () => {
     const { messages, appendMsg, setTyping } = useMessages([]);
-    const [openai, setOpenai] = useState(new OpenAIApi(new Configuration({apiKey: Cookies.get("apiKey")})));
+    const [openai, setOpenai] = useState(new OpenAIApi(new Configuration({ apiKey: Cookies.get("apiKey") })));
 
     // Conversation hook
     const [conversation, setConversation] = useState(new Conversation(defaultSettings));
@@ -28,23 +28,33 @@ const ChatArea = () => {
             const prompt = conversation.get_prompt(val)
             console.log("Prompt: ", prompt)
             console.log("Conversation: ", conversation.conversation)
-            openai.createCompletion({
-                model: 'text-davinci-002',
-                prompt: prompt,
-                stop: defaultSettings['USER_PREFIX'].trim(),
-                max_tokens: defaultSettings['MAX_TOKENS'],
-                frequency_penalty: defaultSettings['FREQUENCY_PENALTY'],
-                presence_penalty: defaultSettings['PRESENCE_PENALTY'],
-            }).then((completion) => {
-                const responseText = completion.data.choices![0].text!;
-                conversation.set_completion(responseText)
+
+            if (Cookies.get("apiKey") === undefined || Cookies.get("apiKey") === "") {
+                console.log("NO API KEY")
                 appendMsg({
                     type: 'text',
-                    content: { text: responseText.trim() },
+                    content: { text: "Please set an API key in the settings." },
+                    position: 'left',
                 });
-            });
+            }
+            else {
+                openai.createCompletion({
+                    model: 'text-davinci-002',
+                    prompt: prompt,
+                    stop: defaultSettings['USER_PREFIX'].trim(),
+                    max_tokens: defaultSettings['MAX_TOKENS'],
+                    frequency_penalty: defaultSettings['FREQUENCY_PENALTY'],
+                    presence_penalty: defaultSettings['PRESENCE_PENALTY'],
+                }).then((completion) => {
+                    const responseText = completion.data.choices![0].text!;
+                    conversation.set_completion(responseText)
+                    appendMsg({
+                        type: 'text',
+                        content: { text: responseText.trim() },
+                    });
+                });
 
-            
+            }
             //conversation.set_completion("Bala bala")
 
 
