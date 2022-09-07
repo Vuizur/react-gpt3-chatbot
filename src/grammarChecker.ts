@@ -2,7 +2,6 @@ import { Configuration, OpenAIApi } from "openai";
 //import openai
 
 
-
 class GrammarChecker {
     correction_string: string;
     openai: OpenAIApi;
@@ -24,7 +23,7 @@ class GrammarChecker {
     }
 
     // Check if the input is correct
-    check(input: string): string {
+    async check(input: string): Promise<string> {
         // Returns the correct string
         const completion = this.openai.createEdit({
             model: "text-davinci-edit-001",
@@ -35,13 +34,9 @@ class GrammarChecker {
         // Wait for the completion
 
         let corrected_text: string = "";
-        completion.then((compl) => {
-            corrected_text = compl.data.choices![0].text!;
-        });
+        const compl = await completion
 
-
-
-
+        corrected_text = compl.data.choices![0].text!;
         //let corrected_text: string = completion.data.choices![0].text!;
         // Can be buggy this way
         corrected_text = corrected_text.replace(this.correction_string, "");
@@ -61,8 +56,8 @@ class GrammarChecker {
                 }
             }
             let separator_index_input_text: number[] = [];
-            for (let i = 0; i < corrected_text.length; i++) {
-                if (corrected_text[i] === "." || corrected_text[i] === "," || corrected_text[i] === ";" || corrected_text[i] === ":" || corrected_text[i] === "!" || corrected_text[i] === "?") {
+            for (let i = 0; i < input.length; i++) {
+                if (input[i] === "." || input[i] === "," || input[i] === ";" || input[i] === ":" || input[i] === "!" || input[i] === "?") {
                     separator_index_input_text.push(i);
                 }
             }
@@ -88,6 +83,7 @@ class GrammarChecker {
         }
 
         return corrected_text
+
     }
 }
 

@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react';
 import './App.css';
-import { Button, Form, Input, Layout, Menu, MenuProps } from 'antd';
+import { Button, Checkbox, Form, Input, Layout, Menu, MenuProps } from 'antd';
 import Cookies from 'js-cookie';
 import defaultSettings from './characters';
 
@@ -35,6 +35,8 @@ const Options = () => {
 
     const [userPrefix, setUserPrefix] = useState(Cookies.get("userPrefix") || defaultSettings.USER_PREFIX)
     const [AIPrefix, setAIPrefix] = useState(Cookies.get("AIPrefix") || defaultSettings.AI_PREFIX)
+    const [language, setLanguage] = useState(Cookies.get("language") || defaultSettings.LANGUAGE)
+    const [correctErrors, setCorrectErrors] = useState(JSON.parse(Cookies.get("correctErrors") || "false"))
 
     console.log("User prefix", Cookies.get("userPrefix"))
     const onFinish = (values: any) => {
@@ -46,6 +48,10 @@ const Options = () => {
         Cookies.set("userPrefix", values.userPrefix, {expires: 365})
         setAIPrefix(values.AIPrefix)
         Cookies.set("AIPrefix", values.AIPrefix, {expires: 365})
+        setLanguage(values.language)
+        Cookies.set("language", values.language, {expires: 365})
+        setCorrectErrors(values.correctErrors)
+        Cookies.set("correctErrors", values.correctErrors, {expires: 365})
         console.log('Success:', values);
     };
 
@@ -58,7 +64,7 @@ const Options = () => {
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            initialValues={{ startingPrompt: startingPrompt, apiKey: apiKey, userPrefix: userPrefix, AIPrefix: AIPrefix }}
+            initialValues={{ startingPrompt: startingPrompt, apiKey: apiKey, userPrefix: userPrefix, AIPrefix: AIPrefix, correctErrors: correctErrors, language: language }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
@@ -85,6 +91,18 @@ const Options = () => {
                 rules={[{ message: 'Please input the AI prefix!' }]}
             >
                 <Input />
+            </Form.Item>
+
+            <Form.Item
+                label="Language"
+                name="language"
+                rules={[{ message: 'Please input language' }]}
+            >
+                <Input />
+            </Form.Item>
+
+            <Form.Item name="correctErrors" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
+                <Checkbox checked={correctErrors}>Correct errors</Checkbox>
             </Form.Item>
 
             <Form.Item
