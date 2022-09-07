@@ -42,7 +42,7 @@ const ChatArea = () => {
                     });
                 }
 
-                const prompt = conversation.get_prompt(val).trim()
+                const prompt = conversation.get_prompt(correction).trim()
                 console.log("Prompt: ", prompt)
                 console.log("Conversation: ", conversation.conversation)
 
