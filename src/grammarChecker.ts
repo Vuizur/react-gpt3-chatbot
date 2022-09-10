@@ -3,27 +3,41 @@ import { Configuration, OpenAIApi } from "openai";
 
 
 class GrammarChecker {
-    correction_string: string;
+    public static supported_languages_correction_dict: { [key: string]: string } = {
+        "German": "Behebe die Rechtschreibung (falls es Fehler gibt)!",
+        "English": "Fix the spelling in the given text if there are any mistakes!",
+        "Spanish": "¡Corrige la ortografía y la gramática (si hay errores)!",
+        "Czech": "Opravte pravopis v daném textu, pokud v něm jsou nějaké chyby!",
+        "Russian": "Исправьте орфографию в приведенном тексте, если в нем есть ошибки!",
+        "French": "Corrigez l'orthographe dans le texte donné s'il y a des erreurs!",
+        "Italian": "Correggete l'ortografia del testo dato, se ci sono errori!",
+        "Polish": "Poprawić pisownię w podanym tekście, jeśli są w nim jakieś błędy!",
+        "Portuguese": "Fixar a ortografia no texto dado se houver algum erro!",
+        "Chinese": "如果有任何错误，请修正给定文本中的拼写",
+        "Japanese": "与えられたテキストにスペルの間違いがあれば、修正しましょう"
+    }
+    correction_string: string | null;
     openai: OpenAIApi;
     // Init with language
     constructor(language: string, configuration: Configuration) {
-        if (language === "German") {
-            this.correction_string = "Behebe die Rechtschreibung (falls es Fehler gibt)."
-        } else if (language === "English") {
-            this.correction_string = "Fix the spelling in the given text if there are any mistakes."
-        } else if (language === "Spanish") {
-            this.correction_string = "¡Corrige la ortografía y la gramática (si hay errores)!"
-        } else if (language === "Czech") {
-            this.correction_string = "Opravte pravopisné chyby!"
+        this.openai = new OpenAIApi(configuration);
+        if (language in GrammarChecker.supported_languages_correction_dict) {
+            this.correction_string = GrammarChecker.supported_languages_correction_dict[language];
+        } else {
+            console.log("Language not supported!");
+            this.correction_string = null;
+            this.openai = new OpenAIApi(configuration)
         }
-        else {
-            throw Error("Language not supported!")
-        }
-        this.openai = new OpenAIApi(configuration)
     }
 
     // Check if the input is correct
     async check(input: string): Promise<string> {
+
+        if (this.correction_string == null) {
+            // return promise with input string
+            console.log("Language not supported!");
+            return input;
+        }
         // Returns the correct string
         const completion = this.openai.createEdit({
             model: "text-davinci-edit-001",
