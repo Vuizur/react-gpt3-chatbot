@@ -30,8 +30,37 @@ class GrammarChecker {
         }
     }
 
-    // Check if the input is correct
     async check(input: string): Promise<string> {
+        // Remove the * from the input string, call _check and add the * again
+        let disallowed_characters: string[] = ["*", "(", ")", "[", "]", "{", "}"];
+        // Remove all disallowed characters left of the string
+        let left_index = 0;
+        for (let i = 0; i < input.length; i++) {
+            if (disallowed_characters.includes(input[i])) {
+                left_index = i + 1;
+            } else {
+                break;
+            }
+        }
+        // Remove all disallowed characters right of the string
+        let right_index = input.length - 1;
+        for (let i = input.length - 1; i >= 0; i--) {
+            if (disallowed_characters.includes(input[i])) {
+                right_index = i - 1;
+            } else {
+                break;
+            }
+        }
+        // Remove all disallowed characters in the string
+        let input_without_disallowed_characters = input.substring(left_index, right_index + 1);
+        let output = await (await this._check(input_without_disallowed_characters)).trim();
+        // Add the * again
+        let output_with_disallowed_characters = input.substring(0, left_index) + output + input.substring(right_index + 1, input.length);
+        return output_with_disallowed_characters;
+    }
+
+    // Check if the input is correct
+    async _check(input: string): Promise<string> {
 
         if (this.correction_string == null) {
             // return promise with input string
