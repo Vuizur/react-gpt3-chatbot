@@ -3,7 +3,9 @@ import { Configuration, OpenAIApi } from "openai";
 
 
 class GrammarChecker {
+    /** Many of these request were machine translated, so they might be buggy */
     public static supported_languages_correction_dict: { [key: string]: string } = {
+        
         "German": "Behebe die Rechtschreibung (falls es Fehler gibt)!",
         "English": "Fix the spelling in the given text if there are any mistakes!",
         "Spanish": "¡Corrige la ortografía y la gramática (si hay errores)!",

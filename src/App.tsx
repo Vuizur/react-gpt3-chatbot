@@ -4,6 +4,7 @@ import '@chatui/core/dist/index.css';
 import { Layout, Menu, MenuProps } from 'antd';
 import ChatArea from './ChatArea';
 import Options from './Options';
+import Info from './Info';
 
 const App = () => {
   const [current, setCurrent] = useState('chat');
@@ -17,6 +18,10 @@ const App = () => {
     {
       label: "Settings",
       key: "settings"
+    },
+    {
+      label: "Info",
+      key: "info"
     }
   ];
 
@@ -27,13 +32,27 @@ const App = () => {
 
   return (
 
-    // A horizontal antd menu with two items: "Chat" and "Configure"
+    // A horizontal antd menu with three items: "Chat", "Options" and "Info"
     // The chat window should be the default view
+
+    <div className="App">
+
+          <Menu
+            items={items}
+            onClick={onClick}
+            selectedKeys={[current]}
+            mode="horizontal"
+          />
+          {current === "chat" && <ChatArea />}
+          {current === "settings" && <Options />}
+          {current === "info" && <Info />}
+    </div>
+    /*
     <div className='App' >
     <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
     {current === 'chat' ? <ChatArea/>: <Options/>}
     </div>
-
+    */
   );
 };
 

@@ -7,7 +7,7 @@ const defaultSettings = {
     "CUT_DIALOGUE_PLACEHOLDER": "...",
     "FREQUENCY_PENALTY": 1,
     "PRESENCE_PENALTY": 1,
-    "MAX_TOKENS": 200,
+    "MAX_TOKENS": 400,
     "LANGUAGE": "English"
 }
 

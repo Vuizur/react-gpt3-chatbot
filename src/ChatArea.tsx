@@ -50,7 +50,7 @@ const ChatArea = () => {
                     console.log("NO API KEY")
                     appendMsg({
                         type: 'text',
-                        content: { text: "Please set an API key in the settings." },
+                        content: { text: "Please set an API key in the settings. If you don't have one, you can get it at https://beta.openai.com/account/api-keys after creating an OpenAI account." },
                         position: 'left',
                     });
                 }

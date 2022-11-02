@@ -102,7 +102,7 @@ const Options = () => {
             </Form.Item>
 
             <Form.Item name="correctErrors" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
-                <Checkbox checked={correctErrors}>Correct errors</Checkbox>
+                <Checkbox checked={correctErrors}>Correct errors in the user's writing</Checkbox>
             </Form.Item>
 
             <Form.Item

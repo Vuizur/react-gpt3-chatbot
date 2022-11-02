@@ -62,3 +62,10 @@ body {
   height: 100%;
   margin: 0;
 }
+
+.Info {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 800px;
+}
