@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/react-gpt3-chatbot/static/css/main.1fa4dafc.css",
-    "main.js": "/react-gpt3-chatbot/static/js/main.11215618.js",
+    "main.js": "/react-gpt3-chatbot/static/js/main.74de2855.js",
     "static/js/787.cf579c02.chunk.js": "/react-gpt3-chatbot/static/js/787.cf579c02.chunk.js",
     "index.html": "/react-gpt3-chatbot/index.html",
     "main.1fa4dafc.css.map": "/react-gpt3-chatbot/static/css/main.1fa4dafc.css.map",
-    "main.11215618.js.map": "/react-gpt3-chatbot/static/js/main.11215618.js.map",
+    "main.74de2855.js.map": "/react-gpt3-chatbot/static/js/main.74de2855.js.map",
     "787.cf579c02.chunk.js.map": "/react-gpt3-chatbot/static/js/787.cf579c02.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1fa4dafc.css",
-    "static/js/main.11215618.js"
+    "static/js/main.74de2855.js"
   ]
 }
