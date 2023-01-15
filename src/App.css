@@ -70,3 +70,11 @@ body {
   max-width: 800px;
   max-width: 80%;
 }
+
+.noApiKeyLabel{
+  min-height: 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}

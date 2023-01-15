@@ -5,11 +5,13 @@ import defaultSettings from "./characters";
 import { Configuration, OpenAIApi } from "openai";
 import Cookies from "js-cookie";
 import GrammarChecker from "./grammarChecker";
+import './App.css';
 
 
 const ChatArea = () => {
+    const storedApiKey = Cookies.get("apiKey");
     const { messages, appendMsg, setTyping } = useMessages([]);
-    const [openai, setOpenai] = useState(new OpenAIApi(new Configuration({ apiKey: Cookies.get("apiKey") })));
+    const [openai, setOpenai] = useState(new OpenAIApi(new Configuration({ apiKey: storedApiKey })));
 
     const [grammarChecker, setGrammarChecker] = useState(new GrammarChecker(Cookies.get("language") || defaultSettings.LANGUAGE, new Configuration({ apiKey: Cookies.get("apiKey") })));
 
@@ -85,14 +87,16 @@ const ChatArea = () => {
 
     return (
         <>
-            <Chat
+            {
+                storedApiKey ? (<Chat
                 navbar={{ title: 'Chatbot' }}
                 messages={messages}
                 renderMessageContent={renderMessageContent}
                 onSend={handleSend}
                 locale="en"
                 placeholder='Type a message'
-            />
+            />):(<div className="noApiKeyLabel">We couldn't find OpenAI API key. Please configure chatbot in Settings to continue.</div>)
+            }
         </>
     )
 }
