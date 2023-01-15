@@ -1,4 +1,5 @@
 @import '~antd/dist/antd.css';
+
 /*.App {
   text-align: center;
 }
@@ -43,7 +44,7 @@ Chat {
 }
 */
 .App {
-  height:80%;
+  height: 80%;
   /*flex: 1 1 auto;*/
 }
 
@@ -71,10 +72,16 @@ body {
   max-width: 80%;
 }
 
-.noApiKeyLabel{
+.noApiKeyLabel {
   min-height: 20rem;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
+}
+
+.spanAsLink {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
 }
