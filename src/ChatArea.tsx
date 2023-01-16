@@ -96,7 +96,7 @@ const ChatArea = ({ setCurrent }: any) => {
                     locale="en"
                     placeholder='Type a message'
                 />) :
-                    (<div className="noApiKeyLabel">We couldn't find OpenAI API key. Please configure chatbot in&nbsp;
+                    (<div className="noApiKeyLabel">We couldn't find an OpenAI API key. Please configure the chatbot in the&nbsp;
                         <span className="spanAsLink" onClick={() => { setCurrent('settings') }}>Settings</span>
                         &nbsp;to continue.</div>)
             }
