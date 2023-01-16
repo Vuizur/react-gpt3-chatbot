@@ -43,7 +43,7 @@ const App = () => {
             selectedKeys={[current]}
             mode="horizontal"
           />
-          {current === "chat" && <ChatArea />}
+          {current === "chat" && <ChatArea setCurrent={setCurrent} />}
           {current === "settings" && <Options />}
           {current === "info" && <Info />}
     </div>

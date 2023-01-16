@@ -5,11 +5,13 @@ import defaultSettings from "./characters";
 import { Configuration, OpenAIApi } from "openai";
 import Cookies from "js-cookie";
 import GrammarChecker from "./grammarChecker";
+import './App.css';
 
 
-const ChatArea = () => {
+const ChatArea = ({ setCurrent }: any) => {
+    const storedApiKey = Cookies.get("apiKey");
     const { messages, appendMsg, setTyping } = useMessages([]);
-    const [openai, setOpenai] = useState(new OpenAIApi(new Configuration({ apiKey: Cookies.get("apiKey") })));
+    const [openai, setOpenai] = useState(new OpenAIApi(new Configuration({ apiKey: storedApiKey })));
 
     const [grammarChecker, setGrammarChecker] = useState(new GrammarChecker(Cookies.get("language") || defaultSettings.LANGUAGE, new Configuration({ apiKey: Cookies.get("apiKey") })));
 
@@ -26,9 +28,9 @@ const ChatArea = () => {
 
             setTyping(true);
             let correction = new Promise<string>((resolve) => resolve(val))
-            console.log("CorrectErrors: " , Cookies.get("correctErrors"))
-            if (Cookies.get("correctErrors") === "true"){
-                 correction = grammarChecker.check(val)
+            console.log("CorrectErrors: ", Cookies.get("correctErrors"))
+            if (Cookies.get("correctErrors") === "true") {
+                correction = grammarChecker.check(val)
             }
 
             correction.then((correction) => {
@@ -85,14 +87,19 @@ const ChatArea = () => {
 
     return (
         <>
-            <Chat
-                navbar={{ title: 'Chatbot' }}
-                messages={messages}
-                renderMessageContent={renderMessageContent}
-                onSend={handleSend}
-                locale="en"
-                placeholder='Type a message'
-            />
+            {
+                storedApiKey ? (<Chat
+                    navbar={{ title: 'Chatbot' }}
+                    messages={messages}
+                    renderMessageContent={renderMessageContent}
+                    onSend={handleSend}
+                    locale="en"
+                    placeholder='Type a message'
+                />) :
+                    (<div className="noApiKeyLabel">We couldn't find OpenAI API key. Please configure chatbot in&nbsp;
+                        <span className="spanAsLink" onClick={() => { setCurrent('settings') }}>Settings</span>
+                        &nbsp;to continue.</div>)
+            }
         </>
     )
 }
